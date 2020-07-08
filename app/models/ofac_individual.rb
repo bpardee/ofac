@@ -27,6 +27,7 @@ class OfacIndividual
   # * <tt>:city</tt> (weighting = 30%)
   def initialize(identity)
     @identity = identity
+    @score = nil
   end
 
   # Creates a score, 1 - 100, based on how well the name and address match the data on the
@@ -97,7 +98,7 @@ class OfacIndividual
 
       name_array.delete_if{|n| n.strip.size < 2}
       unless name_array.empty?
-        hit = OfacSdnIndividual.possible_sdns(name_array).exists?
+        hit = OfacSdnIndividual.possible_sdns(name_array, use_ors = false).present?
       end
     end
     hit

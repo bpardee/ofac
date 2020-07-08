@@ -4,6 +4,7 @@ source 'http://rubygems.org'
 # gem 'debugger'
 
 gem 'rails', '>=3.2'
+gem "sprockets", "< 4.0"
 
 group :test do
   # Pretty printed test output
