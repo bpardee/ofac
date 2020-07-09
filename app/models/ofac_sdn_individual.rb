@@ -8,27 +8,34 @@ class OfacSdnIndividual < ActiveRecord::Base
       alt_hash = Hash.new {|h, k| h[k] = []}
       all = OfacSdnIndividual.select('last_name, first_name_1, first_name_2, first_name_3, first_name_4, first_name_5, first_name_6, first_name_7, first_name_8, alternate_last_name, alternate_first_name_1, alternate_first_name_2, alternate_first_name_3, alternate_first_name_4, alternate_first_name_5, alternate_first_name_6, alternate_first_name_7, alternate_first_name_8, address, city').all.to_a
       all.each do |i|
-        main_hash[i.last_name] << i
-        main_hash[i.first_name_1] << i
-        main_hash[i.first_name_2] << i
-        main_hash[i.first_name_3] << i
-        main_hash[i.first_name_4] << i
-        main_hash[i.first_name_5] << i
-        main_hash[i.first_name_6] << i
-        main_hash[i.first_name_7] << i
-        main_hash[i.first_name_8] << i
-        alt_hash[i.alternate_last_name] << i
-        alt_hash[i.alternate_first_name_1] << i
-        alt_hash[i.alternate_first_name_2] << i
-        alt_hash[i.alternate_first_name_3] << i
-        alt_hash[i.alternate_first_name_4] << i
-        alt_hash[i.alternate_first_name_5] << i
-        alt_hash[i.alternate_first_name_6] << i
-        alt_hash[i.alternate_first_name_7] << i
-        alt_hash[i.alternate_first_name_8] << i
+        add_to_hash(main_hash, i, :last_name)
+        add_to_hash(main_hash, i, :first_name_1)
+        add_to_hash(main_hash, i, :first_name_2)
+        add_to_hash(main_hash, i, :first_name_3)
+        add_to_hash(main_hash, i, :first_name_4)
+        add_to_hash(main_hash, i, :first_name_5)
+        add_to_hash(main_hash, i, :first_name_6)
+        add_to_hash(main_hash, i, :first_name_7)
+        add_to_hash(main_hash, i, :first_name_8)
+        add_to_hash(alt_hash, i, :alternate_last_name)
+        add_to_hash(alt_hash, i, :alternate_first_name_1)
+        add_to_hash(alt_hash, i, :alternate_first_name_2)
+        add_to_hash(alt_hash, i, :alternate_first_name_3)
+        add_to_hash(alt_hash, i, :alternate_first_name_4)
+        add_to_hash(alt_hash, i, :alternate_first_name_5)
+        add_to_hash(alt_hash, i, :alternate_first_name_6)
+        add_to_hash(alt_hash, i, :alternate_first_name_7)
+        add_to_hash(alt_hash, i, :alternate_first_name_8)
       end
       @@main_hash = main_hash
       @@alt_hash = alt_hash
+      true
+    end
+  end
+
+  def self.add_to_hash(hash, individual, field)
+    if val = individual[field]
+      hash[val] << individual
     end
   end
 
